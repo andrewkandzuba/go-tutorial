@@ -5,24 +5,28 @@ import (
 )
 
 const (
-	errorUseNameLen = "User name is incorrect";
+	userNameInvalidLenErrorMessage = "User name length is invalid"
+	userNameTakenErrorMsg = "User name has been already takle"
 )
 
 func main() {
 }
 
-func newMember(existingNames[] string, newName string) string  {
-	validateUserName(newName);
+func newMember(existingNames[] string, newName string) (error, string) {
+
+	if validateLen(newName) == false {
+		return 0, errors.New(userNameInvalidLenErrorMessage)
+	}
 
 	return 0;
 }
 
-func validateUserName(name string) bool {
+func validateLen(name string) bool {
 	length := len(name)
-
 	if length < 1 || length > 50 {
-		return false, errors.New(errorUseNameLen)
+		return false
 	}
-
 	return true
 }
+
+func validate
