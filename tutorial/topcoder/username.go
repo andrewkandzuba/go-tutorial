@@ -13,6 +13,8 @@ func main() {
 
 func newMember(existingNames[] string, newName string) string  {
 	validateUserName(newName);
+
+	return 0;
 }
 
 func validateUserName(name string) bool {
@@ -22,5 +24,5 @@ func validateUserName(name string) bool {
 		return false, errors.New(errorUseNameLen)
 	}
 
-	
+	return true
 }
