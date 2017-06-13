@@ -2,31 +2,55 @@ package main
 
 import (
 	"errors"
+	"regexp"
+	"fmt"
 )
 
 const (
 	userNameInvalidLenErrorMessage = "User name length is invalid"
-	userNameTakenErrorMsg = "User name has been already takle"
+	userNameInvalidContentErrorMessage = "User name contains illigal symbols"
 )
 
 func main() {
-}
+	printNewName("test")
 
-func newMember(existingNames[] string, newName string) (error, string) {
+	printNewName("test2")
 
-	if validateLen(newName) == false {
-		return 0, errors.New(userNameInvalidLenErrorMessage)
+	printNewName("")
+
+	var shortName string
+	for i := 0; i < 50; i++ {
+		shortName += "a";
 	}
+	printNewName(shortName)
 
-	return 0;
+	var longName string
+	for i := 0; i < 51; i++ {
+		longName += "a";
+	}
+	printNewName(longName)
 }
 
-func validateLen(name string) bool {
-	length := len(name)
+func printNewName(newName string) {
+	r, err := newMember(newName)
+	if err != nil {
+		fmt.Printf("\"%s\" is not available: \"%s\"\n", newName, err)
+		return
+	}
+	fmt.Printf("\"%s\" is available\n", r)
+}
+
+func newMember(newName string) (string, error) {
+
+	length := len(newName)
 	if length < 1 || length > 50 {
-		return false
+		return "", errors.New(userNameInvalidLenErrorMessage)
 	}
-	return true
-}
 
-func validate
+	isAlpha := regexp.MustCompile(`^[A-Za-z]+$`).MatchString
+	if !isAlpha(newName) {
+		return "", errors.New(userNameInvalidContentErrorMessage)
+	}
+
+	return newName, nil;
+}
