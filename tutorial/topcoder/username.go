@@ -12,6 +12,7 @@ const (
 )
 
 func main() {
+
 	printNewName("test")
 
 	printNewName("test2")
@@ -29,6 +30,8 @@ func main() {
 		longName += "a";
 	}
 	printNewName(longName)
+
+	buildDB([]string{"MasterOfDisaster", "DingBat", "Orpheus", "WolfMan", "MrKnowItAll"})
 }
 
 func printNewName(newName string) {
@@ -53,4 +56,21 @@ func newMember(newName string) (string, error) {
 	}
 
 	return newName, nil;
+}
+
+func buildDB(existingNames []string) map[string]int {
+
+	db := make(map[string]int)
+
+	for _, name := range existingNames {
+		counter, ok := db[name]
+		if (!ok) {
+			counter = 0
+		}
+		db[name] = counter + 1
+	}
+
+	fmt.Println(db)
+
+	return db
 }
